@@ -2,32 +2,36 @@ package it.unibo.inner.impl;
 
 import it.unibo.inner.api.IterableWithPolicy;
 import it.unibo.inner.api.Predicate;
+
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T> {
-    private int maxSize;
+    private final T[] elements;
 
-    public IterableWithPolicyImpl(T[] arr){
-        maxSize = arr.length;
+    public IterableWithPolicyImpl(final T[] arr){
+        elements = Arrays.copyOf(arr, arr.length);
     }
 
     public void setIterationPolicy(Predicate<T> filter){}
 
     public IteratorImpl iterator(){
-        IteratorImpl it = this.new IteratorImpl();
-        it.index = 0;
-        return it;
+        return this.new IteratorImpl();
     }
 
-    class IteratorImpl implements Iterator<T>{
+    private class IteratorImpl implements Iterator<T>{
         private int index;
 
+        public IteratorImpl(){
+            index = 0;
+        }
+
         public boolean hasNext(){
-            return index <= Outer.maxSize;
+            return index < elements.length;
         }
         
         public T next(){
-            return ;
+            return elements[index++];
         }
     }
 }
