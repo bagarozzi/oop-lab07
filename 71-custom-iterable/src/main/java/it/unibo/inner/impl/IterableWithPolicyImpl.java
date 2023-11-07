@@ -5,29 +5,29 @@ import it.unibo.inner.api.Predicate;
 import java.util.Iterator;
 
 public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T> {
+    private int maxSize;
 
-    public IterableWithPolicyImpl(){
-        
+    public IterableWithPolicyImpl(T[] arr){
+        maxSize = arr.length;
     }
 
     public void setIterationPolicy(Predicate<T> filter){}
 
     public IteratorImpl iterator(){
         IteratorImpl it = this.new IteratorImpl();
-        // it.index = this.?;
+        it.index = 0;
         return it;
     }
 
     class IteratorImpl implements Iterator<T>{
         private int index;
-        private int maxSize;
 
         public boolean hasNext(){
-            return false;
+            return index <= Outer.maxSize;
         }
         
         public T next(){
-            
+            return ;
         }
     }
 }
