@@ -55,12 +55,11 @@ public final class Transformers {
      * @param <O> output elements type
      */
     public static <I, O> List<O> transform(final Iterable<I> base, final Function<I, O> transformer) {
-        Iterator<I> it = base.iterator();
-        List<O> result = new ArrayList<O>();
-        while(it.hasNext()){
-            result.add(transformer.call(it.next()));
-        }
-        return result;
+        return flattenTransform(base, new Function<I, ? extends Collection<? extends O>>(){
+            public O call(I elem){
+                return transformer.call(elem);
+            }
+        });
     }
 
     /**
