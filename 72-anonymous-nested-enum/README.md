@@ -23,7 +23,7 @@ Si minimizzino le duplicazioni di codice, e non si utilizzino metodi "di appoggi
 ## Parte 3: classi innestate ed enum
 
 All'interno della classe MonthSorterNested, si crei una `enum Month` che modella i mesi dell'anno.
-Si suggerisce di valutare l'utilizzo di un campo che modella il numero di giorni del mese.
+Si suggerisce di valutare l 'utilizzo di un campo che modella il numero di giorni del mese.
 Questa enum *deve* avere un metodo `Month fromString(String)` che, data una stringa di testo, restituisce il `Month`
 che meglio la rappresenta. A tal proposito, si legga con molta attenzione la Javadoc di `MonthSorter`.
 
