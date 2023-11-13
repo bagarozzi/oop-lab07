@@ -4,6 +4,7 @@ import it.unibo.functional.api.Function;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,7 +55,12 @@ public final class Transformers {
      * @param <O> output elements type
      */
     public static <I, O> List<O> transform(final Iterable<I> base, final Function<I, O> transformer) {
-        return null;
+        Iterator<I> it = base.iterator();
+        List<O> result = new ArrayList<O>();
+        while(it.hasNext()){
+            result.add(transformer.call(it.next()));
+        }
+        return result;
     }
 
     /**
@@ -70,7 +76,15 @@ public final class Transformers {
      * @param <I> type of the collection elements
      */
     public static <I> List<? extends I> flatten(final Iterable<? extends Collection<? extends I>> base) {
-        return null;
+        Iterator<? extends Collection<? extends I>> mainIterator = base.iterator();
+        List<? extends I> result = new ArrayList<I>();
+        while(mainIterator.hasNext()){ /* Iterates over the iterable of collections */
+            Iterator<? extends I> subIterator = mainIterator.next().iterator(); /* Iterates over the collection type <? extends I> */
+            while(subIterator.hasNext()){
+                result.add(subIterator.next());
+            }
+        }
+        return result;
     }
 
     /**
@@ -87,7 +101,15 @@ public final class Transformers {
      * @param <I> elements type
      */
     public static <I> List<I> select(final Iterable<I> base, final Function<I, Boolean> test) {
-        return null;
+        List<I> result = new ArrayList<I>();
+        Iterator<I> it = base.iterator();
+        while(it.hasNext()){
+            var elem = it.next();
+            if(test.call(elem)){
+                result.add(elem);
+            }
+        }
+        return result;
     }
 
     /**
@@ -103,6 +125,13 @@ public final class Transformers {
      * @param <I> elements type
      */
     public static <I> List<I> reject(final Iterable<I> base, final Function<I, Boolean> test) {
-        return null;
+        return select(base, new Function<I, Boolean>(){ /* Reused the select function from above */
+            public Boolean call(I elem){
+                if(test.call(elem)){
+                    return false;
+                }
+                return true;
+            }
+        });
     }
 }
