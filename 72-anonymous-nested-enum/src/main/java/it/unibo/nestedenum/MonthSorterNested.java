@@ -24,7 +24,7 @@ public final class MonthSorterNested implements MonthSorter {
         August(31),
         September(30),
         October(31),
-        November(30),
+        November(   30),
         December(31);
 
         private int numberOfDays;
