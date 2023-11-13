@@ -1,7 +1,6 @@
 package it.unibo.functional;
 
 import it.unibo.functional.api.Function;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -55,9 +54,9 @@ public final class Transformers {
      * @param <O> output elements type
      */
     public static <I, O> List<O> transform(final Iterable<I> base, final Function<I, O> transformer) {
-        return flattenTransform(base, new Function<I, ? extends Collection<? extends O>>(){
-            public O call(I elem){
-                return transformer.call(elem);
+        return flattenTransform(base, new Function<I, List<? extends O>>(){
+            public List<? extends O> call(I elem){ 
+                return List.of(transformer.call(elem));
             }
         });
     }
@@ -92,15 +91,16 @@ public final class Transformers {
      * @param <I> elements type
      */
     public static <I> List<I> select(final Iterable<I> base, final Function<I, Boolean> test) {
-        List<I> result = new ArrayList<I>();
-        Iterator<I> it = base.iterator();
-        while(it.hasNext()){
-            var elem = it.next();
-            if(test.call(elem)){
-                result.add(elem);
+        return flattenTransform(base, new Function<I, Collection<? extends I>> (){
+            public Collection<? extends I> call(I elem){
+                if(test.call(elem)){
+                    return List.of(elem);
+                }
+                else{
+                    return List.of();
+                }
             }
-        }
-        return result;
+        });
     }
 
     /**
@@ -118,10 +118,7 @@ public final class Transformers {
     public static <I> List<I> reject(final Iterable<I> base, final Function<I, Boolean> test) {
         return select(base, new Function<I, Boolean>(){ /* Reused the select function from above */
             public Boolean call(I elem){
-                if(test.call(elem)){
-                    return false;
-                }
-                return true;
+                return !test.call(elem);
             }
         });
     }
