@@ -76,15 +76,15 @@ public final class Transformers {
      * @param <I> type of the collection elements
      */
     public static <I> List<? extends I> flatten(final Iterable<? extends Collection<? extends I>> base) {
-        Iterator<? extends Collection<? extends I>> mainIterator = base.iterator();
+        /* Iterator<? extends Collection<? extends I>> mainIterator = base.iterator();
         List<? extends I> result = new ArrayList<I>();
-        while(mainIterator.hasNext()){ /* Iterates over the iterable of collections */
-            Iterator<? extends I> subIterator = mainIterator.next().iterator(); /* Iterates over the collection type <? extends I> */
+        while(mainIterator.hasNext()){
+            Iterator<? extends I> subIterator = mainIterator.next().iterator();
             while(subIterator.hasNext()){
                 result.add(subIterator.next());
             }
         }
-        return result;
+        return result; */
     }
 
     /**
