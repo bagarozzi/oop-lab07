@@ -28,7 +28,7 @@ public final class MonthSorterNested implements MonthSorter {
         December(31);
 
         private int numberOfDays;
-        
+        private int ciao;
         private Month(final int numberOfDays){
             this.numberOfDays = numberOfDays;
         }
